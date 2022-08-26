@@ -12,12 +12,19 @@
       <h2>Items</h2>
       <ul class="list-group mb-4">
         {% for item in items %}
-          <li>{{ item.title }}</li>
+          <li>
+            {% if (item.resolved()) %}
+            <del>{{ item.name }}</del>
+            {% else %}
+            {{ item.name }}
+            <a href={{ "/resolve/" + item.id }} >☑</a>
+            {% endif %}
+          </li>
         {% endfor %}
       </ul>
     </div>
     <form action='/new' method="post">
-      <input type="text" id="title" name="title" placeholder="New item">
+      <input type="text" id="name" name="name" placeholder="New item">
       <input type="submit" value="Submit">
     </form>
   </div>
