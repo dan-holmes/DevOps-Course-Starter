@@ -27,6 +27,5 @@ def test_todo_items():
 def test_done_items():
     item_view_model = ViewModel(items)
 
-    print(item_view_model.doing_items)
     assert len(item_view_model.done_items) == 1
     assert done_item in item_view_model.done_items
