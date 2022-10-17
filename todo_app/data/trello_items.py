@@ -3,7 +3,6 @@ import os
 from todo_app.data.Item import Item
 
 base_url = "https://api.trello.com/1"
-board_id = os.getenv('TRELLO_BOARD_ID')
 
 headers = {
    "Accept": "application/json"
@@ -15,6 +14,7 @@ query = {
 }
 
 def get_items():
+    board_id = os.getenv('TRELLO_BOARD_ID')
     response = requests.request(
         "GET",
         base_url + f'/boards/{board_id}/cards',
@@ -23,7 +23,7 @@ def get_items():
             **query,
         }
     )
-    return map(Item.from_json_object, response.json())
+    return list(map(Item.from_json_object, response.json()))
 
 def add_item(name):
     requests.request(
