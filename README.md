@@ -77,5 +77,5 @@ To build and run in production:
 
 ```
 docker build --target production --tag todo-app-prod .
-run --env-file ./.env --publish 8000:8000 todo-app-prod
+docker run --env-file ./.env --publish 8000:8000 todo-app-prod
 ```
