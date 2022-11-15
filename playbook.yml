@@ -1,0 +1,80 @@
+---
+- name: Add private key to SSh agent
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: load ssh key
+    ansible.builtin.shell: eval `ssh-agent -s` ssh-add ~/.ssh/id_rsa
+
+- name: Install To-Do App on new webserver
+  hosts: webservers
+  remote_user: ec2-user
+  vars:
+    flask_app: todo_app/app
+    flask_env: production
+    trello_board_id: WLBKlext
+    trello_todo_list_id: 63089af59162980168f2ad84
+    trello_done_list_id: 63089af706d8dc01f982e4c6
+
+  vars_prompt:
+
+    - name: secret_key
+      prompt: Enter a secret key
+    
+    - name: trello_api_key
+      prompt: Enter your trello api key
+
+    - name: trello_api_token
+      prompt: Enter your trello api token
+
+
+  tasks:
+    - name: Install dependencies
+      ansible.builtin.yum:
+        name:
+         - git
+         - python3
+        state: present
+      become: yes
+
+    - name: Install Poetry
+      ansible.builtin.shell: curl -sSL https://install.python-poetry.org | python3 -
+      args:
+        creates: ~/.local/bin/poetry
+
+    - name: Create directory for the To-Do App code
+      ansible.builtin.file:
+        path: opt/todoapp
+        state: directory
+        owner: ec2-user
+
+    - name: Get latest version of code
+      ansible.builtin.git:
+        repo: git@github.com:dan-holmes/DevOps-Course-Starter.git
+        dest: opt/todoapp
+        version: exercise-4
+        accept_hostkey: yes
+
+    - name: Install project dependencies
+      ansible.builtin.command: /home/ec2-user/.local/bin/poetry install
+      args:
+        chdir: opt/todoapp
+
+    - name: Create .env file
+      ansible.builtin.template:
+        src: ./.env.j2
+        dest: opt/todoapp/.env
+
+    - name: Copy service file to host
+      ansible.builtin.copy:
+        src: ./todoapp.service
+        dest: /etc/systemd/system/todoapp.service
+      become: yes
+
+    - name: Start App
+      ansible.builtin.systemd:
+        name: todoapp
+        daemon_reload: yes
+        state: restarted
+      become: yes
+    

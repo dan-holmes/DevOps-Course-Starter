@@ -60,3 +60,7 @@ Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser
 ```bash
 $ poetry run pytest
 ```
+
+## Set up a webserver from an Ansible Control Node
+ - Add server address to hosts.ini under [webservers]
+ - Run `ansible-playbook playbook.yml -i hosts.ini`
