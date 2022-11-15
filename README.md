@@ -64,3 +64,18 @@ $ poetry run pytest
 ## Set up a webserver from an Ansible Control Node
  - Add server address to hosts.ini under [webservers]
  - Run `ansible-playbook playbook.yml -i hosts.ini`
+
+## Run with Docker
+
+To run in your dev environment with hot loading:
+
+```
+docker compose up
+```
+
+To build and run in production:
+
+```
+docker build --target production --tag todo-app-prod .
+run --env-file ./.env --publish 8000:8000 todo-app-prod
+```
