@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  todo-app:
+    image: todo-app-dev
+    platform: "linux/arm64/v8"
+    build: 
+      dockerfile: Dockerfile
+      target: development
+      context: .
+    volumes:
+      - type: bind
+        source: ./todo_app
+        target: /todo_app
+    ports:
+      - target: 5000
+        published: 5000
+        protocol: tcp
+        mode: host
+    env_file:
+      - .env

@@ -1,0 +1,9 @@
+/.git
+/.vscode
+/.github
+/.pytest_cache
+/.venv
+.env
+.gitignore
+.gitpod.yml
+Dockerfile
