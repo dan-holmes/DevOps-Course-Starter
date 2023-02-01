@@ -1,5 +1,5 @@
-FROM python:3.7-buster as base
-RUN pip install poetry
+FROM python:3.10-bullseye as base
+RUN pip install poetry==1.1.14
 COPY poetry.toml poetry.lock pyproject.toml /
 
 FROM base as production
@@ -12,3 +12,8 @@ FROM base as development
 RUN poetry install -n
 EXPOSE 5000
 ENTRYPOINT poetry run flask run --host 0.0.0.0
+
+FROM base as test
+RUN poetry install -n
+COPY /todo_app /todo_app
+ENTRYPOINT ["poetry", "run", "pytest"]

@@ -1,5 +1,4 @@
 import datetime
-import pytest
 from todo_app.data.ViewModel import ViewModel
 from todo_app.data.Item import Item
 from todo_app.data.ItemStatus import ItemStatus
