@@ -3,7 +3,7 @@ RUN pip install poetry==1.1.14
 COPY poetry.toml poetry.lock pyproject.toml /
 
 FROM base as production
-RUN poetry install -n --without dev
+RUN poetry install -n
 COPY /todo_app /todo_app
 EXPOSE 8000
 ENTRYPOINT poetry run gunicorn --bind 0.0.0.0 "todo_app.app:create_app()"
