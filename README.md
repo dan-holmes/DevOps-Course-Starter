@@ -1,6 +1,6 @@
 # DevOps Apprenticeship: Project Exercise
 
-> If you are using GitPod for the project exercise (i.e. you cannot use your local machine) then you'll want to launch a VM using the [following link](https://gitpod.io/#https://github.com/CorndelWithSoftwire/DevOps-Course-Starter). Note this VM comes pre-setup with Python & Poetry pre-installed. :)
+> If you are using GitPod for the project exercise (i.e. you cannot use your local machine) then you'll want to launch a VM using the [following link](https://gitpod.io/#https://github.com/CorndelWithSoftwire/DevOps-Course-Starter). Note this VM comes pre-setup with Python & Poetry pre-installed.
 
 ## System Requirements
 
@@ -78,4 +78,12 @@ To build and run in production:
 ```
 docker build --target production --tag todo-app-prod .
 docker run --env-file ./.env --publish 8000:8000 todo-app-prod
+```
+
+To build and test:
+
+```
+docker build --target test --tag test .
+docker run test todo_app/test/unit_tests
+docker run --env-file .env.docker test todo_app/test/integration_tests
 ```
