@@ -87,3 +87,17 @@ docker build --target test --tag test .
 docker run test todo_app/test/unit_tests
 docker run --env-file .env.docker test todo_app/test/integration_tests
 ```
+
+# Manual deployment
+
+```
+docker build --target production --tag dsdanielh/dev-ops-todo:prod2 .
+docker push dsdanielh/dev-ops-todo:prod2
+ curl -dH -X POST "https://\$dh-dev-ops:<deployment_password>@dh-dev-ops.scm.azurewebsites.net/api/registry/webhook"
+```
+
+# Links
+
+Dockerhub deployment [here](https://hub.docker.com/repository/docker/dsdanielh/dev-ops-todo/general).
+
+Azure deployment [here](https://dh-dev-ops.azurewebsites.net/).
