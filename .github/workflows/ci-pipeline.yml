@@ -44,7 +44,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: dsdanielh/dev-ops-todo:latest
+          tags: dsdanielh/dev-ops-todo:prod2
           labels: ${{ steps.meta.outputs.labels }}
 
   deploy:
