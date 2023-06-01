@@ -3,29 +3,21 @@ from todo_app.data.ItemStatus import ItemStatus
 
 class Item:
 
-    def __init__(self, id, name, status, created_at):
-        self.id = id
+    def __init__(self, id, name, status_id, created_at):
+        self.id = str(id)
         self.name = name
-        self.status = status
+        self.status = self._getItemStatus(status_id)
         self.created_at = created_at
 
     def resolved(self):
-        return self.status == ItemStatus.DONE
+        return self.status == 'DONE'
 
-    @classmethod
-    def from_json_object(cls, json_object):
-        return Item(
-            json_object['id'],
-            json_object['name'],
-            cls._getStatusFromListId(json_object['idList']),
-            json_object['start']
-        )
-    
-    @classmethod
-    def _getStatusFromListId(_, list_id):
-        if list_id == os.getenv('TRELLO_TODO_LIST_ID'):
+    def _getItemStatus(_, status_id):
+        if status_id == 1:
             return ItemStatus.TODO
-        elif list_id == os.getenv('TRELLO_DONE_LIST_ID'):
+        elif status_id == 3:
+            return ItemStatus.DOING
+        elif status_id == 2:
             return ItemStatus.DONE
         else:
-            raise Exception('Invalid list id')
+            raise ValueError('Invalid status')

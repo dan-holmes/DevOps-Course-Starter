@@ -3,10 +3,10 @@ from todo_app.data.ViewModel import ViewModel
 from todo_app.data.Item import Item
 from todo_app.data.ItemStatus import ItemStatus
 
-doing_item = Item(1, 'Doing Item', ItemStatus.DOING, datetime.datetime.now())
-doing_item_2 = Item(1, 'Doing Item 2', ItemStatus.DOING, datetime.datetime.now())
-todo_item = Item(1, 'ToDo Item', ItemStatus.TODO, datetime.datetime.now())
-done_item = Item(1, 'Done Item', ItemStatus.DONE, datetime.datetime.now())
+doing_item = Item(1, 'Doing Item', ItemStatus.DOING.value, datetime.datetime.now())
+doing_item_2 = Item(1, 'Doing Item 2', ItemStatus.DOING.value, datetime.datetime.now())
+todo_item = Item(1, 'ToDo Item', ItemStatus.TODO.value, datetime.datetime.now())
+done_item = Item(1, 'Done Item', ItemStatus.DONE.value, datetime.datetime.now())
 
 items = [doing_item, doing_item_2, todo_item, done_item]
 
